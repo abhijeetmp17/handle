@@ -5,10 +5,8 @@ import com.hotel.mamnagement.handle.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RequestMapping("employee")
 @RestController
@@ -23,5 +21,21 @@ public class EmployeeController
 
         return new ResponseEntity<Employee>(newEmployee, HttpStatus.CREATED);
 
+    }
+
+    @GetMapping("/getAllEmployee")
+    public ResponseEntity<List<Employee>> getAllEmployee(){
+
+       List<Employee> employees =  employeeService.fetchAllEmployee();
+
+       return  new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
+    }
+
+    @GetMapping("/getEmployeeById/{empId}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Integer empId){
+
+       Employee employee =  employeeService.fetchEmployeeById(empId);
+
+        return  new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
 }
